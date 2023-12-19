@@ -1,0 +1,31 @@
+{
+    "name": "spirytone/sitemap-bundle",
+    "type": "symfony-bundle",
+    "description": "Symfony Sitemap Generating Bundle",
+    "keywords": ["sitemap", "google", "seo"],
+    "license": "MIT",
+    "minimum-stability": "stable",
+    "authors": [
+        {
+            "name": "Pawel Wilk",
+            "email": "pawel@wilk.pro",
+            "homepage": "https://wilk.pro"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "SpirytOne\\SitemapBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SpirytOne\\SitemapBundle\\Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "symfony/http-kernel": "^7.0",
+        "symfony/filesystem": "^7.0",
+        "ext-xmlwriter": "*",
+        "symfony/console": "^7.0"
+    }
+}
