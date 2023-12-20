@@ -51,16 +51,16 @@ class SitemapManager implements SitemapManagerInterface
         return $this;
     }
 
-    public function setOutputDirectory(string $outputDir): self
+    public function setOutputDirectory(string $outputDirectory): self
     {
-        $this->outputDir = $outputDir;
+        $this->outputDirectory = $outputDirectory;
 
         return $this;
     }
 
     public function getOutputDirectory(): string
     {
-        return $this->outputDir;
+        return $this->outputDirectory;
     }
 
     public function setBaseUrl(string $baseUrl): self
