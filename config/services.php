@@ -15,12 +15,12 @@ return static function (ContainerConfigurator $container): void {
             ->alias(SitemapManagerInterface::class, 'spirytone.sitemap_manager')
 
         // Split writer
-        ->set('spirytone.sitemap.writer.abstract_split', Writer\SplitSitemapWriter::class)
+        ->set('spirytone.sitemap.writer.abstract_split', Writer\SplitXmlSitemapWriter::class)
             ->abstract()
             ->tag('spirytone.sitemap.writer')
 
         // Continous writer
-        ->set('spirytone.sitemap.writer.abstract_continuous', Writer\ContinuousSitemapWriter::class)
+        ->set('spirytone.sitemap.writer.abstract_continuous', Writer\ContinuousXmlSitemapWriter::class)
             ->abstract()
             ->tag('spirytone.sitemap.writer')
 

@@ -7,12 +7,12 @@ use SpirytOne\SitemapBundle\SitemapWriterInterface;
 /**
  * ContinuousSitemapWriter write all sitemaps to one files
  */
-class ContinuousSitemapWriter extends AbstractWriter
+class ContinuousSitemapWriter extends AbstractSitemapWriter
 {
     /**
      * @inheritdoc
      */
-    public function generate(): array
+    public function generate(string $outputDirectory, ?string $baseUrl = null): array
     {
         //
     }
