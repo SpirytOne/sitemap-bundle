@@ -5,7 +5,6 @@ namespace SpirytOne\SitemapBundle\DependencyInjection\Compiler;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
-use SpirytOne\SitemapBundle\Services\SitemapManager;
 
 class SitemapPass implements CompilerPassInterface
 {

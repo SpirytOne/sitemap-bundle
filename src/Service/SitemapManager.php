@@ -3,8 +3,8 @@
 namespace SpirytOne\SitemapBundle\Service;
 
 use SpirytOne\SitemapBundle\Contracts\SitemapInterface;
-use SpirytOne\SitemapBundle\Contracts\SitemapWriterInterface;
 use SpirytOne\SitemapBundle\Contracts\SitemapManagerInterface;
+use SpirytOne\SitemapBundle\Contracts\SitemapWriterInterface;
 
 class SitemapManager implements SitemapManagerInterface
 {
@@ -22,7 +22,7 @@ class SitemapManager implements SitemapManagerInterface
         return $this;
     }
 
-    public function generate(array $names = [], ?string $outputDirectory = null, ?string $baseUrl = null): array
+    public function generate(array $names = [], string $outputDirectory = null, string $baseUrl = null): array
     {
         if (empty($names)) {
             $names = array_keys($this->sitemaps);

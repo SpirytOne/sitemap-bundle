@@ -1,15 +1,13 @@
 <?php
+
 namespace SpirytOne\SitemapBundle;
 
-use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
+use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class SpirytOneSitemapBundle extends Bundle
 {
-    /**
-     * {@inheritdoc}
-     */
     public function build(ContainerBuilder $container): void
     {
         parent::build($container);
@@ -18,9 +16,6 @@ class SpirytOneSitemapBundle extends Bundle
         $container->addCompilerPass(new \SpirytOne\SitemapBundle\DependencyInjection\Compiler\SitemapWriterPass());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getContainerExtension(): ?ExtensionInterface
     {
         return new \SpirytOne\SitemapBundle\DependencyInjection\SpirytOneSitemapExtension();

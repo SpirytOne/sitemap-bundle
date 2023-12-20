@@ -2,16 +2,13 @@
 
 namespace SpirytOne\SitemapBundle\Writer;
 
-use SpirytOne\SitemapBundle\Contracts\SitemapWriterInterface;
 use SpirytOne\SitemapBundle\Contracts\SitemapInterface;
+use SpirytOne\SitemapBundle\Contracts\SitemapWriterInterface;
 
 abstract class AbstractSitemapWriter implements SitemapWriterInterface
 {
     private array $sitemaps = [];
 
-    /**
-     * @inheritdoc
-     */
     public function addSitemap(SitemapInterface $sitemap): static
     {
         $this->sitemaps[$sitemap->getName()] = $sitemap;
