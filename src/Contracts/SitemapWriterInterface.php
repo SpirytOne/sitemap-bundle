@@ -7,9 +7,9 @@ interface SitemapWriterInterface
     /**
      * Add sitemaps to generate
      *
-     * @return static
+     * @return self
      */
-    public function addSitemap(SitemapInterface $sitemap): static;
+    public function addSitemap(SitemapInterface $sitemap): self;
 
     /**
      * Generate and saves files

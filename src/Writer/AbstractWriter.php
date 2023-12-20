@@ -3,8 +3,9 @@
 namespace SpirytOne\SitemapBundle\Writer;
 
 use SpirytOne\SitemapBundle\Contracts\SitemapWriterInterface;
+use SpirytOne\SitemapBundle\Contracts\SitemapInterface;
 
-class AbstractWriter implements SitemapWriterInterface
+abstract class AbstractWriter implements SitemapWriterInterface
 {
     private array $sitemaps = [];
 

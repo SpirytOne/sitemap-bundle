@@ -13,10 +13,10 @@ class Configuration implements ConfigurationInterface
 
         $treeBuilder->getRootNode()
             ->children()
-                ->scalarNode('default_uri')->defaultValue('%router.request_context.scheme%://%router.request_context.host%/sitemaps/')->end()
+                ->scalarNode('default_base_url')->defaultValue('%router.request_context.scheme%://%router.request_context.host%/sitemaps/')->end()
                 ->scalarNode('default_output_directory')->defaultValue('%kernel.project_dir%/public/sitemaps')->end()
                 ->integerNode('default_urls_limit')->defaultValue(40000)->end()
-                ->scalarNode('default_writer')->defaultValue('default')->end()
+                ->scalarNode('default_writer')->defaultValue('split')->end()
                 ->arrayNode('writers')
                     ->useAttributeAsKey('name')
                     ->requiresAtLeastOneElement()
