@@ -35,8 +35,10 @@ class GenerateCommand extends Command
         $names = $input->getArgument('name');
 
         $io->title('Generate sitemap');
+        /** @phpstan-ignore-next-line */
         $files = $this->sitemapManager->generate($names);
 
+        /** @phpstan-ignore-next-line */
         if ($input->getOption('with-index')) {
             // $files[] = $this->sitemapManager->generateSitemapIndex($files);
         }

@@ -23,7 +23,7 @@ class SitemapWriterPass implements CompilerPassInterface
             }
 
             foreach ($tags as $tag) {
-                $manager->addMethodCall('addWriter', [$tag['name'], new Reference($id)]);
+                $manager->addMethodCall('addWriter', [new Reference($id), $tag['alias'] ?? null]);
             }
         }
     }

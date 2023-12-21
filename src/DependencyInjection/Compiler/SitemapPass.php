@@ -14,11 +14,17 @@ class SitemapPass implements CompilerPassInterface
             return;
         }
 
-        $definition = $container->findDefinition('spirytone.sitemap_manager');
-        $taggedServices = $container->findTaggedServiceIds('spirytone.sitemap');
+        $manager = $container->findDefinition('spirytone.sitemap_manager');
 
-        foreach ($taggedServices as $id => $tags) {
-            $definition->addMethodCall('add', [new Reference($id)]);
+        foreach ($container->findTaggedServiceIds('spirytone.sitemap') as $id => $tags) {
+            $definition = $container->getDefinition($id);
+            if ($definition->isAbstract()) {
+                continue;
+            }
+
+            foreach ($tags as $tag) {
+                $manager->addMethodCall('add', [new Reference($id), $tag['alias'] ?? null]);
+            }
         }
     }
 }

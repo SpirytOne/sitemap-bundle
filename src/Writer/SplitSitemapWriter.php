@@ -7,7 +7,15 @@ namespace SpirytOne\SitemapBundle\Writer;
  */
 class SplitSitemapWriter extends AbstractSitemapWriter
 {
+    /**
+     * @inheritdoc
+     */
     public function generate(string $outputDirectory, string $baseUrl = null): array
     {
+    }
+
+    public function getName(): string
+    {
+        return 'split';
     }
 }

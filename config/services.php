@@ -27,11 +27,11 @@ return static function (ContainerConfigurator $container): void {
         ->set('spirytone.sitemap.writer.split')
             ->parent('spirytone.sitemap.writer.abstract_split')
             ->public()
-            ->tag('spirytone.sitemap.writer', ['name' => 'split'])
+            ->tag('spirytone.sitemap.writer', ['alias' => 'split'])
 
         ->set('spirytone.sitemap.writer.continuous')
             ->parent('spirytone.sitemap.writer.abstract_continuous')
             ->public()
-            ->tag('spirytone.sitemap.writer', ['name' => 'continuous'])
+            ->tag('spirytone.sitemap.writer', ['alias' => 'continuous'])
         ;
 };

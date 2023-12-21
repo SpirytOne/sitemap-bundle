@@ -30,13 +30,14 @@ class WriterListCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
         $writers = $this->sitemapManager->getWriters();
+
         $table = [];
         foreach ($writers as $name => $writer) {
             $table[] = [$name, $writer::class];
         }
 
         $io->title('Sitemaps');
-        $io->table(['Name', 'Class'], $table);
+        $io->table(['Name/Alias', 'Class'], $table);
 
         return Command::SUCCESS;
     }

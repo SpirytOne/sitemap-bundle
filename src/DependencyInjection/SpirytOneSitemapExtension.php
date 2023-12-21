@@ -43,7 +43,7 @@ final class SpirytOneSitemapExtension extends Extension
             }
 
             foreach ($tags as $tag) {
-                if ($tag['name'] == $name) {
+                if ($tag['alias'] == $name) {
                     $manager->addMethodCall('setDefaultWriter', [new Reference($id)]);
 
                     $container->setAlias(SitemapWriterInterface::class, $id);
@@ -54,6 +54,6 @@ final class SpirytOneSitemapExtension extends Extension
             }
         }
 
-        throw new \DomainException(sprintf('Writer `%s` does not exists.', $name));
+        throw new \InvalidArgumentException(sprintf('Writer `%s` does not exists.', $name));
     }
 }

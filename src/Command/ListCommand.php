@@ -31,12 +31,12 @@ class ListCommand extends Command
 
         $sitemaps = $this->sitemapManager->getSitemaps();
         $table = [];
-        foreach ($sitemaps as $sitemap) {
-            $table[] = [$sitemap->getName(), $sitemap::class];
+        foreach ($sitemaps as $name => $sitemap) {
+            $table[] = [$name, $sitemap::class];
         }
 
         $io->title('Sitemaps');
-        $io->table(['Name', 'Class'], $table);
+        $io->table(['Name/Alias', 'Class'], $table);
 
         return Command::SUCCESS;
     }

@@ -11,6 +11,10 @@ interface SitemapWriterInterface
 
     /**
      * Generate sitemaps and returns array of filepaths.
+     *
+     * @return array<int,string>
      */
     public function generate(string $outputDirectory, string $baseUrl = null): array;
+
+    public function getName(): string;
 }

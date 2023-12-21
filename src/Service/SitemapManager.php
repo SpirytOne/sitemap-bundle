@@ -8,7 +8,14 @@ use SpirytOne\SitemapBundle\Contracts\SitemapWriterInterface;
 
 class SitemapManager implements SitemapManagerInterface
 {
+    /**
+     * @var array<string,SitemapInterface>
+     */
     private array $sitemaps = [];
+
+    /**
+     * @var array<string,SitemapWriterInterface>
+     */
     private array $writers = [];
 
     private SitemapWriterInterface $defaultWriter;
@@ -37,9 +44,9 @@ class SitemapManager implements SitemapManagerInterface
         // $files = [];
     }
 
-    public function addWriter(string $name, SitemapWriterInterface $writer): self
+    public function addWriter(SitemapWriterInterface $writer, string $alias = null): self
     {
-        $this->writers[$name] = $writer;
+        $this->writers[$alias ?: $writer->getName()] = $writer;
 
         return $this;
     }

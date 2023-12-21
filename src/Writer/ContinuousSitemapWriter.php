@@ -10,4 +10,9 @@ class ContinuousSitemapWriter extends AbstractSitemapWriter
     public function generate(string $outputDirectory, string $baseUrl = null): array
     {
     }
+
+    public function getName(): string
+    {
+        return 'continuous';
+    }
 }
