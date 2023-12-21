@@ -33,13 +33,15 @@ class GenerateCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
         $names = $input->getArgument('name');
+        $baseUrl = $input->getOption('base-url');
+        $outputDirectory = $input->getOption('output-dir');
 
         $io->title('Generate sitemap');
-        /** @phpstan-ignore-next-line */
-        $files = $this->sitemapManager->generate($names);
+
+        $files = $this->sitemapManager->generate($names, $baseUrl, $outputDirectory);
 
         /** @phpstan-ignore-next-line */
-        if ($input->getOption('with-index')) {
+        if ($input->hasOption('with-index')) {
             // $files[] = $this->sitemapManager->generateSitemapIndex($files);
         }
         $io->listing($files);

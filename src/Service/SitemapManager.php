@@ -37,7 +37,7 @@ class SitemapManager implements SitemapManagerInterface
     /**
      * @inheritdoc
      */
-    public function generate(array $names = []): array
+    public function generate(array $names = [], string $baseUrl = null, string $outputDirectory = null): array
     {
         if (count($names) == 0) {
             $names = array_keys($this->sitemaps);
@@ -49,7 +49,12 @@ class SitemapManager implements SitemapManagerInterface
             }
         }
 
-        // $files = [];
+        $sitemaps = [];
+        foreach ($names as $name) {
+            $sitemaps[$name] = $this->sitemaps[$name];
+        }
+
+        return $this->defaultWriter->generate($sitemaps, $outputDirectory ?? $this->outputDirectory, $baseUrl ?? $this->baseUrl);
     }
 
     public function addWriter(SitemapWriterInterface $writer, string $alias = null): self

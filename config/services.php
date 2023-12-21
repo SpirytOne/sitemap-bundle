@@ -19,6 +19,7 @@ return static function (ContainerConfigurator $container): void {
             ->abstract()
             ->tag('spirytone.sitemap.writer')
 
+
         // Continous writer
         ->set('spirytone.sitemap.writer.abstract_continuous', Writer\ContinuousSitemapWriter::class)
             ->abstract()
@@ -27,11 +28,13 @@ return static function (ContainerConfigurator $container): void {
         ->set('spirytone.sitemap.writer.split')
             ->parent('spirytone.sitemap.writer.abstract_split')
             ->public()
+            ->call('setFilesystem', [service('filesystem')])
             ->tag('spirytone.sitemap.writer', ['alias' => 'split'])
 
         ->set('spirytone.sitemap.writer.continuous')
             ->parent('spirytone.sitemap.writer.abstract_continuous')
             ->public()
+            ->call('setFilesystem', [service('filesystem')])
             ->tag('spirytone.sitemap.writer', ['alias' => 'continuous'])
         ;
 };

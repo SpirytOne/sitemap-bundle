@@ -10,4 +10,9 @@ interface SitemapInterface
     public function getUrls(): iterable;
 
     public function getName(): string;
+
+    /**
+     * @return array<SitemapExtension>
+     */
+    public function getExtensions(): array;
 }
