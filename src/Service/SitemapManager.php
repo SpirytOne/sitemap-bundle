@@ -22,7 +22,7 @@ class SitemapManager implements SitemapManagerInterface
         return $this;
     }
 
-    public function generate(array $names = [], string $outputDirectory = null, string $baseUrl = null): array
+    public function generate(array $names = []): array
     {
         if (empty($names)) {
             $names = array_keys($this->sitemaps);

@@ -25,7 +25,7 @@ class GenerateCommand extends Command
             ->addArgument('name', InputArgument::IS_ARRAY, 'Name(s) of sitemap', [])
             ->addOption('output-dir', 'o', InputOption::VALUE_OPTIONAL, 'Output directory', $this->sitemapManager->getOutputDirectory())
             ->addOption('base-url', 'u', InputOption::VALUE_OPTIONAL, 'Base url used in sitemap index', $this->sitemapManager->getBaseUrl())
-            ->addOption('with-index', 'i', InputOption::VALUE_NONE, 'Generate sitemap index file')
+            ->addOption('with-index', 'i', InputOption::VALUE_NEGATABLE, 'Generate sitemap index file')
         ;
     }
 
@@ -35,10 +35,10 @@ class GenerateCommand extends Command
         $names = $input->getArgument('name');
 
         $io->title('Generate sitemap');
-        $files = $this->sitemapManager->generateSitemaps($names);
+        $files = $this->sitemapManager->generate($names);
 
         if ($input->getOption('with-index')) {
-            $files[] = $this->sitemapManager->generateSitemapIndex($files);
+            // $files[] = $this->sitemapManager->generateSitemapIndex($files);
         }
         $io->listing($files);
 
