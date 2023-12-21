@@ -18,8 +18,13 @@ class SitemapManager implements SitemapManagerInterface
      */
     private array $writers = [];
 
+    /** @phpstan-ignore-next-line */
     private SitemapWriterInterface $defaultWriter;
+
+    /** @phpstan-ignore-next-line */
     private string $outputDirectory;
+
+    /** @phpstan-ignore-next-line */
     private string $baseUrl;
 
     public function add(SitemapInterface $sitemap): static
@@ -29,14 +34,17 @@ class SitemapManager implements SitemapManagerInterface
         return $this;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function generate(array $names = []): array
     {
-        if (empty($names)) {
+        if (count($names) == 0) {
             $names = array_keys($this->sitemaps);
         } else {
             $diff = array_diff($names, array_keys($this->sitemaps));
 
-            if (!empty($diff)) {
+            if (count($diff) > 0) {
                 throw new \LogicException(sprintf('Sitemaps `%s` does not exists!', join(', ', $diff)));
             }
         }
@@ -46,7 +54,7 @@ class SitemapManager implements SitemapManagerInterface
 
     public function addWriter(SitemapWriterInterface $writer, string $alias = null): self
     {
-        $this->writers[$alias ?: $writer->getName()] = $writer;
+        $this->writers[$alias ?? $writer->getName()] = $writer;
 
         return $this;
     }
