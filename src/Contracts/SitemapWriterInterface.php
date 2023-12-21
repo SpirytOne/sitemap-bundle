@@ -9,7 +9,7 @@ interface SitemapWriterInterface
      *
      * @param array<SitemapInterface> $sitemaps
      *
-     * @return array<int,string>
+     * @return array<string>
      */
     public function generate(array $sitemaps, string $outputDirectory, string $baseUrl = null): array;
 

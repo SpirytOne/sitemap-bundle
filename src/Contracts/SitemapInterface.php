@@ -5,7 +5,7 @@ namespace SpirytOne\SitemapBundle\Contracts;
 interface SitemapInterface
 {
     /**
-     * @return array<int,SitemapUrlInterface>
+     * @return array<SitemapUrlInterface>
      */
     public function getUrls(): iterable;
 

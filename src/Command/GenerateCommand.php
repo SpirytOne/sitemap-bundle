@@ -38,6 +38,7 @@ class GenerateCommand extends Command
 
         $io->title('Generate sitemap');
 
+        /** @phpstan-ignore-next-line */
         $files = $this->sitemapManager->generate($names, $baseUrl, $outputDirectory);
 
         /** @phpstan-ignore-next-line */

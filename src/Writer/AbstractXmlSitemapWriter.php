@@ -3,6 +3,7 @@
 namespace SpirytOne\SitemapBundle\Writer;
 
 use SpirytOne\SitemapBundle\Contracts\SitemapInterface;
+use SpirytOne\SitemapBundle\Contracts\SitemapUrlInterface;
 use SpirytOne\SitemapBundle\Contracts\SitemapWriterInterface;
 use SpirytOne\SitemapBundle\Contracts\SitemapExtension;
 use Symfony\Component\Filesystem\Filesystem;
@@ -10,10 +11,6 @@ use Symfony\Component\Filesystem\Path;
 
 abstract class AbstractXmlSitemapWriter implements SitemapWriterInterface
 {
-    /**
-     * @var array<string,SitemapInterface>
-     */
-    private array $sitemaps = [];
     private Filesystem $filesystem;
     private int $urlLimit = 40000;
     private bool $prettyPrint = true;
@@ -42,19 +39,19 @@ abstract class AbstractXmlSitemapWriter implements SitemapWriterInterface
         $xmlWriter->startDocument('1.0', 'UTF-8');
         $xmlWriter->startElementNs(null, 'urlset', 'http://www.sitemaps.org/schemas/sitemap/0.9');
 
-        if (in_array(SitemapExtension::VIDEO, $extensions)) {
+        if (in_array(SitemapExtension::VIDEO, $extensions, true)) {
             $this->addVideoExtension($xmlWriter);
         }
 
-        if (in_array(SitemapExtension::NEWS, $extensions)) {
+        if (in_array(SitemapExtension::NEWS, $extensions, true)) {
             $this->addNewsExtension($xmlWriter);
         }
 
-        if (in_array(SitemapExtension::IMAGE, $extensions)) {
+        if (in_array(SitemapExtension::IMAGE, $extensions, true)) {
             $this->addImageExtension($xmlWriter);
         }
 
-        if (in_array(SitemapExtension::XHTML, $extensions)) {
+        if (in_array(SitemapExtension::XHTML, $extensions, true)) {
             $this->addXhtmlExtension($xmlWriter);
         }
 
@@ -80,6 +77,12 @@ abstract class AbstractXmlSitemapWriter implements SitemapWriterInterface
         return $this->filesystem;
     }
 
+    /**
+     * @param array<string,array<string>> $sitemaps
+     * @param string $targetDirectory
+     *
+     * @return array<string>
+     */
     protected function moveFiles(array $sitemaps, string $targetDirectory): array
     {
         $output = [];
@@ -102,7 +105,49 @@ abstract class AbstractXmlSitemapWriter implements SitemapWriterInterface
             }
         }
 
+        /** @psalm-suppress UnevaluatedCode */
         return $output;
+    }
+
+    protected function addUrl(\XMLWriter $xmlWriter, SitemapUrlInterface $url): void
+    {
+        $xmlWriter->startElement('url');
+
+        $xmlWriter->startElement('loc');
+        $xmlWriter->text(strtr($url->getLoc(), '\'', '&apos;'));
+        $xmlWriter->endElement();
+
+        if (($lastmod = $url->getLastmod()) instanceof \DateTimeInterface) {
+            $xmlWriter->startElement('lastmod');
+            $xmlWriter->text($lastmod->format('Y-m-d'));
+            $xmlWriter->endElement();
+        }
+
+        if ($changefreq = $url->getChangefreq()) {
+            $xmlWriter->startElement('changefreq');
+            $xmlWriter->text($changefreq);
+            $xmlWriter->endElement();
+        }
+
+        if ($priority = $url->getPriority()) {
+            $xmlWriter->startElement('priority');
+            $xmlWriter->text(sprintf('%.1f', $priority));
+            $xmlWriter->endElement();
+        }
+
+        $xmlWriter->endElement();
+    }
+
+    protected function getUrlLimit(): int
+    {
+        return $this->urlLimit;
+    }
+
+    protected function setUrlLimit(int $limit): self
+    {
+        $this->urlLimit = $limit;
+
+        return $this;
     }
 
     private function addVideoExtension(\XMLWriter $xmlWriter): void

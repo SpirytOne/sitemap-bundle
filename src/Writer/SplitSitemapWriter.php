@@ -18,11 +18,32 @@ class SplitSitemapWriter extends AbstractXmlSitemapWriter
         foreach ($sitemaps as $sitemap) {
             $basename = sprintf('sitemap_%s', $sitemap->getName());
             $filename = $this->getTempfilePath($basename);
-            $files[$basename][] = $filename;
+            $xml = $this->startXmlFile($filename, $sitemap->getExtensions());
 
-            // add urls
+            $urlsCount = 0;
+            foreach ($sitemap->getUrls() as $url) {
+                if ($urlsCount >= $this->getUrlLimit()) {
+                    $this->closeXmlFile($xml);
+                    $files[$basename][] = $filename;
+                    $filename = $this->getTempfilePath($basename, count($files[$basename]));
+                    $urlsCount = 0;
 
-            $xml = $this->startXmlFile($filename, [SitemapExtension::VIDEO, SitemapExtension::NEWS, SitemapExtension::IMAGE, SitemapExtension::XHTML]);//$sitemap->getExtensions());
+                    $xml = $this->startXmlFile($filename);
+                }
+
+                $this->addUrl($xml, $url);
+                $urlsCount++;
+
+                if (($urlsCount % 1000) == 0) {
+                    $xml->flush();
+                    \gc_collect_cycles();
+                }
+            }
+
+            if ($urlsCount > 0) {
+                $files[$basename][] = $filename;
+            }
+
             $this->closeXmlFile($xml);
         }
 

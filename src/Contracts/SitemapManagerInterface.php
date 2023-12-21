@@ -9,9 +9,9 @@ interface SitemapManagerInterface
      *
      * @param array<string> $names
      * @param string $baseUrl
-     * @param string @outputDirectory
+     * @param string $outputDirectory
      *
-     * @return array<int,string>
+     * @return array<string>
      */
     public function generate(array $names = [], string $baseUrl = null, string $outputDirectory = null): array;
     public function getOutputDirectory(): string;
