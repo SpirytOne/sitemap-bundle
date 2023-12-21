@@ -21,6 +21,7 @@ class GenerateCommand extends Command
     protected function configure(): void
     {
         $this
+            ->setDescription('Generate sitemaps')
             ->addArgument('name', InputArgument::IS_ARRAY, 'Name(s) of sitemap', [])
             ->addOption('output-dir', 'o', InputOption::VALUE_OPTIONAL, 'Output directory', $this->sitemapManager->getOutputDirectory())
             ->addOption('base-url', 'u', InputOption::VALUE_OPTIONAL, 'Base url used in sitemap index', $this->sitemapManager->getBaseUrl())

@@ -74,4 +74,14 @@ class SitemapManager implements SitemapManagerInterface
     {
         return $this->baseUrl;
     }
+
+    public function getSitemaps(): array
+    {
+        return $this->sitemaps;
+    }
+
+    public function getWriters(): array
+    {
+        return $this->writers;
+    }
 }
