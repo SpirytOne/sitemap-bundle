@@ -1,6 +1,6 @@
 <?php
 
-use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\{service, param};
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use SpirytOne\SitemapBundle\Service\SitemapManager;
 use SpirytOne\SitemapBundle\Writer;
@@ -14,17 +14,21 @@ return static function (ContainerConfigurator $container): void {
             ->alias(SitemapManager::class, 'spirytone.sitemap_manager')
             ->alias(SitemapManagerInterface::class, 'spirytone.sitemap_manager')
 
-        // Split writer
+        // Abstract Split writer
         ->set('spirytone.sitemap.writer.abstract_split', Writer\SplitSitemapWriter::class)
             ->abstract()
+            ->call('setUrlsLimit', [param('spirytone.sitemap.default_urls_limit')])
             ->tag('spirytone.sitemap.writer')
 
 
-        // Continous writer
+        // Abstract Continous writer
         ->set('spirytone.sitemap.writer.abstract_continuous', Writer\ContinuousSitemapWriter::class)
             ->abstract()
+            ->call('setUrlsLimit', [param('spirytone.sitemap.default_urls_limit')])
+            ->call('setPrettyPrint', [param('spirytone.sitemap.pretty_print')])
             ->tag('spirytone.sitemap.writer')
 
+        // Writers
         ->set('spirytone.sitemap.writer.split')
             ->parent('spirytone.sitemap.writer.abstract_split')
             ->public()
@@ -35,6 +39,7 @@ return static function (ContainerConfigurator $container): void {
             ->parent('spirytone.sitemap.writer.abstract_continuous')
             ->public()
             ->call('setFilesystem', [service('filesystem')])
+            ->call('setPrettyPrint', [param('spirytone.sitemap.pretty_print')])
             ->tag('spirytone.sitemap.writer', ['alias' => 'continuous'])
         ;
 };

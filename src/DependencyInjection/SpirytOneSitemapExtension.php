@@ -25,6 +25,12 @@ final class SpirytOneSitemapExtension extends Extension
         $this->setDefaultWriter($config['default_writer'], $container, $manager);
         $manager->addMethodCall('setOutputDirectory', [$config['default_output_directory']]);
         $manager->addMethodCall('setBaseUrl', [$config['default_base_url']]);
+
+        $container->setParameter('spirytone.sitemap.default_writer_name', $config['default_writer']);
+        $container->setParameter('spirytone.sitemap.default_output_directory', $config['default_output_directory']);
+        $container->setParameter('spirytone.sitemap.default_base_url', $config['default_base_url']);
+        $container->setParameter('spirytone.sitemap.default_urls_limit', $config['default_urls_limit']);
+        $container->setParameter('spirytone.sitemap.pretty_print', $config['pretty_print']);
     }
 
     public function getAlias(): string

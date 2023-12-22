@@ -7,6 +7,9 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 class Configuration implements ConfigurationInterface
 {
+    /**
+     * @psalm-suppress UndefinedMethod
+     */
     public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder('spirytone_sitemap');
@@ -17,18 +20,7 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('default_output_directory')->defaultValue('%kernel.project_dir%/public/sitemaps')->end()
                 ->integerNode('default_urls_limit')->defaultValue(40000)->end()
                 ->scalarNode('default_writer')->defaultValue('split')->end()
-                ->arrayNode('writers')
-                    ->useAttributeAsKey('name')
-                    ->requiresAtLeastOneElement()
-                    ->arrayPrototype()
-                        ->addDefaultsIfNotSet()
-                        ->children()
-                            ->scalarNode('writer')->end()
-                            ->scalarNode('output_directory')->defaultNull()->end()
-                            ->integerNode('urls_limit')->defaultNull()->end()
-                        ->end()
-                    ->end()
-                ->end()
+                ->scalarNode('pretty_print')->defaultFalse()->end()
             ->end()
         ;
 

@@ -22,7 +22,7 @@ class SplitSitemapWriter extends AbstractXmlSitemapWriter
 
             $urlsCount = 0;
             foreach ($sitemap->getUrls() as $url) {
-                if ($urlsCount >= $this->getUrlLimit()) {
+                if ($urlsCount >= $this->getUrlsLimit()) {
                     $this->closeXmlFile($xml);
                     $files[$basename][] = $filename;
                     $filename = $this->getTempfilePath($basename, count($files[$basename]));

@@ -12,12 +12,26 @@ use Symfony\Component\Filesystem\Path;
 abstract class AbstractXmlSitemapWriter implements SitemapWriterInterface
 {
     private Filesystem $filesystem;
-    private int $urlLimit = 40000;
-    private bool $prettyPrint = true;
+    private int $urlsLimit = 40000;
+    private bool $prettyPrint = false;
+
+    public function setPrettyPrint(bool $prettyPrint): self
+    {
+        $this->prettyPrint = $prettyPrint;
+
+        return $this;
+    }
 
     public function setFilesystem(Filesystem $filesystem): self
     {
         $this->filesystem = $filesystem;
+
+        return $this;
+    }
+
+    public function setUrlsLimit(int $limit): self
+    {
+        $this->urlsLimit = $limit;
 
         return $this;
     }
@@ -138,16 +152,9 @@ abstract class AbstractXmlSitemapWriter implements SitemapWriterInterface
         $xmlWriter->endElement();
     }
 
-    protected function getUrlLimit(): int
+    protected function getUrlsLimit(): int
     {
-        return $this->urlLimit;
-    }
-
-    protected function setUrlLimit(int $limit): self
-    {
-        $this->urlLimit = $limit;
-
-        return $this;
+        return $this->urlsLimit;
     }
 
     private function addVideoExtension(\XMLWriter $xmlWriter): void

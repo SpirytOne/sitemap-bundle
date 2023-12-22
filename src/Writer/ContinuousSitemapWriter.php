@@ -22,7 +22,7 @@ class ContinuousSitemapWriter extends AbstractXmlSitemapWriter
         $urlsCount = 0;
         foreach ($sitemaps as $sitemap) {
             foreach ($sitemap->getUrls() as $url) {
-                if ($urlsCount >= $this->getUrlLimit()) {
+                if ($urlsCount >= $this->getUrlsLimit()) {
                     $this->closeXmlFile($xml);
                     $files['sitemap'][] = $filename;
                     $filename = $this->getTempfilePath('sitemap', count($files['sitemap']));
