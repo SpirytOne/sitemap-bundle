@@ -6,6 +6,7 @@ use SpirytOne\SitemapBundle\Contracts\SitemapInterface;
 use SpirytOne\SitemapBundle\Contracts\SitemapManagerInterface;
 use SpirytOne\SitemapBundle\Contracts\SitemapWriterInterface;
 
+    /** @psalm-suppress MissingConstructor */
 class SitemapManager implements SitemapManagerInterface
 {
     /**
@@ -57,14 +58,14 @@ class SitemapManager implements SitemapManagerInterface
         return $this->defaultWriter->generate($sitemaps, $outputDirectory ?? $this->outputDirectory, $baseUrl ?? $this->baseUrl);
     }
 
-    public function addWriter(SitemapWriterInterface $writer, string $alias = null): self
+    public function addWriter(SitemapWriterInterface $writer, string $alias = null): static
     {
         $this->writers[$alias ?? $writer->getName()] = $writer;
 
         return $this;
     }
 
-    public function setDefaultWriter(SitemapWriterInterface $writer): self
+    public function setDefaultWriter(SitemapWriterInterface $writer): static
     {
         $this->defaultWriter = $writer;
 

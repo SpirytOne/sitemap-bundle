@@ -16,6 +16,9 @@ interface SitemapManagerInterface
     public function generate(array $names = [], string $baseUrl = null, string $outputDirectory = null): array;
     public function getOutputDirectory(): string;
     public function getBaseUrl(): string;
+    public function add(SitemapInterface $sitemap): static;
+    public function addWriter(SitemapWriterInterface $writer, string $alias = null): static;
+    public function setDefaultWriter(SitemapWriterInterface $writer): static;
 
     /**
      * Returns all registered sitemaps
