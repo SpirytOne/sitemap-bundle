@@ -32,7 +32,7 @@ class ContinuousSitemapWriter extends AbstractXmlSitemapWriter
                 }
 
                 $this->addUrl($xml, $url);
-                $urlsCount++;
+                ++$urlsCount;
 
                 if (($urlsCount % 1000) == 0) {
                     $xml->flush();

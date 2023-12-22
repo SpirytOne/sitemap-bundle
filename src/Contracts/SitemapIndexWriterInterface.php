@@ -5,11 +5,9 @@ namespace SpirytOne\SitemapBundle\Contracts;
 interface SitemapIndexWriterInterface extends SitemapWriterInterface
 {
     /**
-     * Generates index and return file path with it
+     * Generates index and return file path with it.
      *
      * @param array<string> $files
-     * @param string $outputDirectory
-     * @param string $baseUrl
      *
      * @return array<string>
      */

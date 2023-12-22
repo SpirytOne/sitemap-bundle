@@ -2,10 +2,9 @@
 
 namespace SpirytOne\SitemapBundle\Writer;
 
-use SpirytOne\SitemapBundle\Contracts\SitemapInterface;
-use SpirytOne\SitemapBundle\Contracts\SitemapUrlInterface;
-use SpirytOne\SitemapBundle\Contracts\SitemapIndexWriterInterface;
 use SpirytOne\SitemapBundle\Contracts\SitemapExtension;
+use SpirytOne\SitemapBundle\Contracts\SitemapIndexWriterInterface;
+use SpirytOne\SitemapBundle\Contracts\SitemapUrlInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Path;
 
@@ -36,13 +35,10 @@ abstract class AbstractXmlSitemapWriter implements SitemapIndexWriterInterface
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function generateIndex(array $files, string $outputDirectory, string $baseUrl): array
     {
-        if ((strlen($baseUrl) > 0) && (substr($baseUrl, -1) !== '/')) {
-            $baseUrl = $baseUrl . '/';
+        if ((strlen($baseUrl) > 0) && ('/' !== substr($baseUrl, -1))) {
+            $baseUrl = $baseUrl.'/';
         }
 
         $filepath = $this->getTempfilePath('index');
@@ -58,13 +54,13 @@ abstract class AbstractXmlSitemapWriter implements SitemapIndexWriterInterface
         foreach ($files as $path) {
             $filename = \pathinfo($path, \PATHINFO_BASENAME);
             $xmlWriter->startElement('sitemap');
-                $xmlWriter->startElement('loc');
-                $xmlWriter->text(sprintf('%s%s', $baseUrl, $filename));
-                $xmlWriter->endElement();
+            $xmlWriter->startElement('loc');
+            $xmlWriter->text(sprintf('%s%s', $baseUrl, $filename));
+            $xmlWriter->endElement();
 
-                $xmlWriter->startElement('lastmod');
-                $xmlWriter->text((new \DateTime())->format(\DateTime::W3C));
-                $xmlWriter->endElement();
+            $xmlWriter->startElement('lastmod');
+            $xmlWriter->text((new \DateTime())->format(\DateTime::W3C));
+            $xmlWriter->endElement();
             $xmlWriter->endElement();
         }
 
@@ -75,10 +71,7 @@ abstract class AbstractXmlSitemapWriter implements SitemapIndexWriterInterface
     }
 
     /**
-     * @param string $filepath
      * @param array<SitemapExtension> $extensions
-     *
-     * @return \XMLWriter
      */
     protected function startXmlFile(string $filepath, array $extensions = []): \XMLWriter
     {
@@ -131,7 +124,6 @@ abstract class AbstractXmlSitemapWriter implements SitemapIndexWriterInterface
 
     /**
      * @param array<string,array<string>> $sitemaps
-     * @param string $targetDirectory
      *
      * @return array<string>
      */
@@ -157,7 +149,7 @@ abstract class AbstractXmlSitemapWriter implements SitemapIndexWriterInterface
             }
         }
 
-        /** @psalm-suppress UnevaluatedCode */
+        /* @psalm-suppress UnevaluatedCode */
         return $output;
     }
 

@@ -2,7 +2,8 @@
 
 namespace SpirytOne\SitemapBundle\Contracts;
 
-enum SitemapExtension {
+enum SitemapExtension
+{
     case VIDEO;
     case NEWS;
     case IMAGE;

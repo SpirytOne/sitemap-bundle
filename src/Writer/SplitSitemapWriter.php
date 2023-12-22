@@ -2,16 +2,11 @@
 
 namespace SpirytOne\SitemapBundle\Writer;
 
-use SpirytOne\SitemapBundle\Contracts\SitemapExtension;
-
 /**
  * SplitSitemapWriter write each sitemap to separate file (sitemap_<name of sitemap>).
  */
 class SplitSitemapWriter extends AbstractXmlSitemapWriter
 {
-    /**
-     * @inheritdoc
-     */
     public function generate(array $sitemaps, string $outputDirectory): array
     {
         $files = [];
@@ -32,7 +27,7 @@ class SplitSitemapWriter extends AbstractXmlSitemapWriter
                 }
 
                 $this->addUrl($xml, $url);
-                $urlsCount++;
+                ++$urlsCount;
 
                 if (($urlsCount % 1000) == 0) {
                     $xml->flush();
@@ -50,9 +45,6 @@ class SplitSitemapWriter extends AbstractXmlSitemapWriter
         return $this->moveFiles($files, $outputDirectory);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getName(): string
     {
         return 'split';

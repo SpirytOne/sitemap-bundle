@@ -2,12 +2,12 @@
 
 namespace SpirytOne\SitemapBundle\Service;
 
+use SpirytOne\SitemapBundle\Contracts\SitemapIndexWriterInterface;
 use SpirytOne\SitemapBundle\Contracts\SitemapInterface;
 use SpirytOne\SitemapBundle\Contracts\SitemapManagerInterface;
 use SpirytOne\SitemapBundle\Contracts\SitemapWriterInterface;
-use SpirytOne\SitemapBundle\Contracts\SitemapIndexWriterInterface;
 
-    /** @psalm-suppress MissingConstructor */
+/** @psalm-suppress MissingConstructor */
 class SitemapManager implements SitemapManagerInterface
 {
     /**
@@ -36,12 +36,9 @@ class SitemapManager implements SitemapManagerInterface
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function generate(array $names, string $outputDirectory = null, bool $withIndex = false, string $baseUrl = null): array
     {
-        if (count($names) == 0) {
+        if (0 == count($names)) {
             $names = array_keys($this->sitemaps);
         } else {
             $diff = array_diff($names, array_keys($this->sitemaps));
