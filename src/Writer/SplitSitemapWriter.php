@@ -12,7 +12,7 @@ class SplitSitemapWriter extends AbstractXmlSitemapWriter
     /**
      * @inheritdoc
      */
-    public function generate(array $sitemaps, string $outputDirectory, string $baseUrl = null): array
+    public function generate(array $sitemaps, string $outputDirectory): array
     {
         $files = [];
         foreach ($sitemaps as $sitemap) {

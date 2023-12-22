@@ -20,7 +20,7 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('default_output_directory')->defaultValue('%kernel.project_dir%/public/sitemaps')->end()
                 ->integerNode('default_urls_limit')->defaultValue(40000)->end()
                 ->scalarNode('default_writer')->defaultValue('split')->end()
-                ->scalarNode('pretty_print')->defaultFalse()->end()
+                ->scalarNode('pretty_print')->defaultTrue()->end()
             ->end()
         ;
 

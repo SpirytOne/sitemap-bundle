@@ -4,12 +4,12 @@ namespace SpirytOne\SitemapBundle\Writer;
 
 use SpirytOne\SitemapBundle\Contracts\SitemapInterface;
 use SpirytOne\SitemapBundle\Contracts\SitemapUrlInterface;
-use SpirytOne\SitemapBundle\Contracts\SitemapWriterInterface;
+use SpirytOne\SitemapBundle\Contracts\SitemapIndexWriterInterface;
 use SpirytOne\SitemapBundle\Contracts\SitemapExtension;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Path;
 
-abstract class AbstractXmlSitemapWriter implements SitemapWriterInterface
+abstract class AbstractXmlSitemapWriter implements SitemapIndexWriterInterface
 {
     private Filesystem $filesystem;
     private int $urlsLimit = 40000;
@@ -34,6 +34,44 @@ abstract class AbstractXmlSitemapWriter implements SitemapWriterInterface
         $this->urlsLimit = $limit;
 
         return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function generateIndex(array $files, string $outputDirectory, string $baseUrl): array
+    {
+        if ((strlen($baseUrl) > 0) && (substr($baseUrl, -1) !== '/')) {
+            $baseUrl = $baseUrl . '/';
+        }
+
+        $filepath = $this->getTempfilePath('index');
+        $xmlWriter = new \XMLWriter();
+        $xmlWriter->openUri($filepath);
+        if ($this->prettyPrint) {
+            $xmlWriter->setIndent(true);
+            $xmlWriter->setIndentString('    ');
+        }
+        $xmlWriter->startDocument('1.0', 'UTF-8');
+        $xmlWriter->startElementNs(null, 'sitemapindex', 'http://www.sitemaps.org/schemas/sitemap/0.9');
+
+        foreach ($files as $path) {
+            $filename = \pathinfo($path, \PATHINFO_BASENAME);
+            $xmlWriter->startElement('sitemap');
+                $xmlWriter->startElement('loc');
+                $xmlWriter->text(sprintf('%s%s', $baseUrl, $filename));
+                $xmlWriter->endElement();
+
+                $xmlWriter->startElement('lastmod');
+                $xmlWriter->text((new \DateTime())->format(\DateTime::W3C));
+                $xmlWriter->endElement();
+            $xmlWriter->endElement();
+        }
+
+        $xmlWriter->endElement();
+        $xmlWriter->endDocument();
+
+        return $this->moveFiles(['sitemap_index' => [$filepath]], $outputDirectory);
     }
 
     /**

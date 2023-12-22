@@ -11,7 +11,7 @@ interface SitemapWriterInterface
      *
      * @return array<string>
      */
-    public function generate(array $sitemaps, string $outputDirectory, string $baseUrl = null): array;
+    public function generate(array $sitemaps, string $outputDirectory): array;
 
     public function getName(): string;
 }

@@ -5,6 +5,7 @@ namespace SpirytOne\SitemapBundle\Service;
 use SpirytOne\SitemapBundle\Contracts\SitemapInterface;
 use SpirytOne\SitemapBundle\Contracts\SitemapManagerInterface;
 use SpirytOne\SitemapBundle\Contracts\SitemapWriterInterface;
+use SpirytOne\SitemapBundle\Contracts\SitemapIndexWriterInterface;
 
     /** @psalm-suppress MissingConstructor */
 class SitemapManager implements SitemapManagerInterface
@@ -38,7 +39,7 @@ class SitemapManager implements SitemapManagerInterface
     /**
      * @inheritdoc
      */
-    public function generate(array $names = [], string $baseUrl = null, string $outputDirectory = null): array
+    public function generate(array $names, string $outputDirectory = null, bool $withIndex = false, string $baseUrl = null): array
     {
         if (count($names) == 0) {
             $names = array_keys($this->sitemaps);
@@ -55,7 +56,15 @@ class SitemapManager implements SitemapManagerInterface
             $sitemaps[$name] = $this->sitemaps[$name];
         }
 
-        return $this->defaultWriter->generate($sitemaps, $outputDirectory ?? $this->outputDirectory, $baseUrl ?? $this->baseUrl);
+        $files = $this->defaultWriter->generate($sitemaps, $outputDirectory ?? $this->outputDirectory);
+
+        if ($withIndex && ($this->defaultWriter instanceof SitemapIndexWriterInterface)) {
+            $index = $this->defaultWriter->generateIndex($files, $outputDirectory ?? $this->outputDirectory, $baseUrl ?? $this->baseUrl);
+
+            $files = array_merge($files, $index);
+        }
+
+        return $files;
     }
 
     public function addWriter(SitemapWriterInterface $writer, string $alias = null): static
