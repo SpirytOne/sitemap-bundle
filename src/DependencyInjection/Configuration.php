@@ -26,7 +26,6 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('writer')->end()
                             ->scalarNode('output_directory')->defaultNull()->end()
                             ->integerNode('urls_limit')->defaultNull()->end()
-                            ->booleanNode('pretty_print')->defaultFalse()->end()
                         ->end()
                     ->end()
                 ->end()

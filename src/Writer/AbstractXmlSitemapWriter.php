@@ -123,13 +123,13 @@ abstract class AbstractXmlSitemapWriter implements SitemapWriterInterface
             $xmlWriter->endElement();
         }
 
-        if ($changefreq = $url->getChangefreq()) {
+        if (($changefreq = $url->getChangefreq()) !== null) {
             $xmlWriter->startElement('changefreq');
             $xmlWriter->text($changefreq);
             $xmlWriter->endElement();
         }
 
-        if ($priority = $url->getPriority()) {
+        if (($priority = $url->getPriority()) !== null) {
             $xmlWriter->startElement('priority');
             $xmlWriter->text(sprintf('%.1f', $priority));
             $xmlWriter->endElement();

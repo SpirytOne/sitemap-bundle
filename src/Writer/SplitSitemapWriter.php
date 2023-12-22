@@ -28,7 +28,7 @@ class SplitSitemapWriter extends AbstractXmlSitemapWriter
                     $filename = $this->getTempfilePath($basename, count($files[$basename]));
                     $urlsCount = 0;
 
-                    $xml = $this->startXmlFile($filename);
+                    $xml = $this->startXmlFile($filename, $sitemap->getExtensions());
                 }
 
                 $this->addUrl($xml, $url);
