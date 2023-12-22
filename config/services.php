@@ -5,14 +5,15 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 use SpirytOne\SitemapBundle\Service\SitemapManager;
 use SpirytOne\SitemapBundle\Writer;
 use SpirytOne\SitemapBundle\Contracts\SitemapManagerInterface;
+use SpirytOne\SitemapBundle\Controller\SitemapIndexController;
 
 return static function (ContainerConfigurator $container): void {
     $container->services()
         // Manager service
-        ->set('spirytone.sitemap_manager', SitemapManager::class)
+        ->set('spirytone.sitemap.manager', SitemapManager::class)
             ->public()
-            ->alias(SitemapManager::class, 'spirytone.sitemap_manager')
-            ->alias(SitemapManagerInterface::class, 'spirytone.sitemap_manager')
+            ->alias(SitemapManager::class, 'spirytone.sitemap.manager')
+            ->alias(SitemapManagerInterface::class, 'spirytone.sitemap.manager')
 
         // Abstract Split writer
         ->set('spirytone.sitemap.writer.abstract_split', Writer\SplitSitemapWriter::class)
@@ -41,5 +42,9 @@ return static function (ContainerConfigurator $container): void {
             ->call('setFilesystem', [service('filesystem')])
             ->call('setPrettyPrint', [param('spirytone.sitemap.pretty_print')])
             ->tag('spirytone.sitemap.writer', ['alias' => 'continuous'])
+
+        ->set('spirytone.sitemap.controller.sitemap_index', SitemapIndexController::class)
+            ->args([service('spirytone.sitemap.manager')])
+            ->tag('controller.service_arguments')
         ;
 };

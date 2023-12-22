@@ -8,15 +8,15 @@ use SpirytOne\SitemapBundle\Command as Commands;
 return static function (ContainerConfigurator $container): void {
     $container->services()
         ->set('spirytone.sitemap.command.generate', Commands\GenerateCommand::class)
-            ->args([service('spirytone.sitemap_manager')])
+            ->args([service('spirytone.sitemap.manager')])
             ->tag('console.command', ['command' => 'spirytone:sitemap:generate'])
 
         ->set('spirytone.sitemap.command.list', Commands\ListCommand::class)
-            ->args([service('spirytone.sitemap_manager')])
+            ->args([service('spirytone.sitemap.manager')])
             ->tag('console.command', ['command' => 'spirytone:sitemap:list'])
 
-        ->set('spirytone.sitemap.command.writer_list', Commands\WriterListCommand::class)
-            ->args([service('spirytone.sitemap_manager')])
+        ->set('spirytone.sitemap.command.writer.list', Commands\WriterListCommand::class)
+            ->args([service('spirytone.sitemap.manager')])
             ->tag('console.command', ['command' => 'spirytone:sitemap:writer-list'])
     ;
 };

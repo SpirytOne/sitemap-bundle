@@ -21,7 +21,7 @@ final class SpirytOneSitemapExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $manager = $container->getDefinition('spirytone.sitemap_manager');
+        $manager = $container->getDefinition('spirytone.sitemap.manager');
         $this->setDefaultWriter($config['default_writer'], $container, $manager);
         $manager->addMethodCall('setOutputDirectory', [$config['default_output_directory']]);
         $manager->addMethodCall('setBaseUrl', [$config['default_base_url']]);

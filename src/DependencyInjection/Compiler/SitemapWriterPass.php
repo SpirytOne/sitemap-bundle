@@ -10,11 +10,11 @@ class SitemapWriterPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container): void
     {
-        if (!$container->has('spirytone.sitemap_manager')) {
+        if (!$container->has('spirytone.sitemap.manager')) {
             return;
         }
 
-        $manager = $container->findDefinition('spirytone.sitemap_manager');
+        $manager = $container->findDefinition('spirytone.sitemap.manager');
 
         foreach ($container->findTaggedServiceIds('spirytone.sitemap.writer') as $id => $tags) {
             $definition = $container->getDefinition($id);
