@@ -20,4 +20,9 @@ class SpirytOneSitemapBundle extends Bundle
     {
         return new \SpirytOne\SitemapBundle\DependencyInjection\SpirytOneSitemapExtension();
     }
+
+    public function getPath(): string
+    {
+        return \dirname(__DIR__);
+    }
 }

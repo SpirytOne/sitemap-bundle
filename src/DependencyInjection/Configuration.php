@@ -18,9 +18,9 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->scalarNode('default_base_url')->defaultValue('%router.request_context.scheme%://%router.request_context.host%/sitemaps/')->end()
                 ->scalarNode('default_output_directory')->defaultValue('%kernel.project_dir%/public/sitemaps')->end()
-                ->integerNode('default_urls_limit')->defaultValue(40000)->end()
                 ->scalarNode('default_writer')->defaultValue('split')->end()
-                ->scalarNode('pretty_print')->defaultTrue()->end()
+                ->integerNode('default_urls_limit')->defaultValue(40000)->end()
+                ->booleanNode('pretty_print')->defaultFalse()->end()
             ->end()
         ;
 
