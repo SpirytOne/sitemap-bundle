@@ -43,8 +43,10 @@ return static function (ContainerConfigurator $container): void {
             ->call('setPrettyPrint', [param('spirytone.sitemap.pretty_print')])
             ->tag('spirytone.sitemap.writer', ['alias' => 'continuous'])
 
-        ->set('spirytone.sitemap.controller.sitemap_index', SitemapIndexController::class)
-            ->args([service('spirytone.sitemap.manager')])
+        // Controllers
+        ->set(SitemapIndexController::class)
+            ->public()
+            ->args([service('spirytone.sitemap.manager'), param('spirytone.sitemap.pretty_print')])
             ->tag('controller.service_arguments')
         ;
 };
