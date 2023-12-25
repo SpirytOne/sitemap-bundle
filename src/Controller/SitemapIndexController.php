@@ -12,8 +12,7 @@ class SitemapIndexController
     public function __construct(
         private SitemapManagerInterface $sitemapManager,
         private bool $prettyPrint = false,
-    )
-    {
+    ) {
     }
 
     public function __invoke(Request $request): Response
