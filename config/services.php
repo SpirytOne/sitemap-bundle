@@ -15,32 +15,30 @@ return static function (ContainerConfigurator $container): void {
             ->alias(SitemapManager::class, 'spirytone.sitemap.manager')
             ->alias(SitemapManagerInterface::class, 'spirytone.sitemap.manager')
 
-        // Abstract Split writer
+        // Abstract writers
         ->set('spirytone.sitemap.writer.abstract_split', Writer\SplitSitemapWriter::class)
             ->abstract()
             ->call('setUrlsLimit', [param('spirytone.sitemap.default_urls_limit')])
+            ->call('setPrettyPrint', [param('spirytone.sitemap.pretty_print')])
+            ->call('setFilesystem', [service('filesystem')])
             ->tag('spirytone.sitemap.writer')
 
-
-        // Abstract Continous writer
         ->set('spirytone.sitemap.writer.abstract_continuous', Writer\ContinuousSitemapWriter::class)
             ->abstract()
             ->call('setUrlsLimit', [param('spirytone.sitemap.default_urls_limit')])
             ->call('setPrettyPrint', [param('spirytone.sitemap.pretty_print')])
+            ->call('setFilesystem', [service('filesystem')])
             ->tag('spirytone.sitemap.writer')
 
         // Writers
         ->set('spirytone.sitemap.writer.split')
             ->parent('spirytone.sitemap.writer.abstract_split')
             ->public()
-            ->call('setFilesystem', [service('filesystem')])
             ->tag('spirytone.sitemap.writer', ['alias' => 'split'])
 
         ->set('spirytone.sitemap.writer.continuous')
             ->parent('spirytone.sitemap.writer.abstract_continuous')
             ->public()
-            ->call('setFilesystem', [service('filesystem')])
-            ->call('setPrettyPrint', [param('spirytone.sitemap.pretty_print')])
             ->tag('spirytone.sitemap.writer', ['alias' => 'continuous'])
 
         // Controllers
